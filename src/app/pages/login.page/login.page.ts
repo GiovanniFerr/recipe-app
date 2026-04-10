@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgForm, FormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../auth/auth';
-
 import { MaterialModule } from '../../modules/material.module';
 
 @Component({
   selector: 'app-login.page',
-  imports: [MaterialModule, FormsModule],
+  imports: [MaterialModule, ReactiveFormsModule],
   templateUrl: './login.page.html',
   styleUrl: './login.page.css',
 })
@@ -15,20 +14,26 @@ export class LoginPage {
   isLoading = false;
   error = '';
 
+  form: FormGroup;
+
   constructor(
     private authService: Auth,
     private router: Router
-  ) {}
+  ) {
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])});
+  }
 
-  onSubmit(form: NgForm) {
-    if (form.invalid) return;
+  onSubmit() {
+    if (this.form.invalid) return;
 
-    const { username, password } = form.value;
+    const { email, password } = this.form.value;
 
     this.isLoading = true;
 
     setTimeout(() => {
-      this.authService.login(username, password);
+      this.authService.login(email, password);
 
       this.isLoading = false;
 
@@ -36,4 +41,3 @@ export class LoginPage {
     }, 800);
   }
 }
-
