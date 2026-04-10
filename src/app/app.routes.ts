@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { Navbar } from './layout/navbar/navbar';
-import { authGuard, authChildGuard } from './auth/auth-guard';
+import { authGuard } from './auth/auth-guard';
 import { RecipesPage } from './pages/recipes.page/recipes.page';
 import { RecipeCreatePage } from './pages/recipe-create.page/recipe-create.page';
 import { RecipeDetailPage } from './pages/recipe-detail.page/recipe-detail.page';
@@ -8,9 +7,9 @@ import { RecipeEditPage } from './pages/recipe-edit.page/recipe-edit.page';
 import { LoginPage } from './pages/login.page/login.page';
 
 export const routes: Routes = [
-    { path: '', canActivate: [authGuard], canActivateChild: [authChildGuard],
+    { path: '', canActivate: [authGuard],
         children: [
-            { path: '', redirectTo: 'recipes', pathMatch: 'full' },
+            {path: '', redirectTo: 'recipes', pathMatch: 'full'},
             {path: 'recipes', component: RecipesPage},
             {path: 'recipes/create', component: RecipeCreatePage},
             {path: 'recipes/:id', component: RecipeDetailPage},

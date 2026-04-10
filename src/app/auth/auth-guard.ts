@@ -1,4 +1,4 @@
-import { CanActivateFn, CanActivateChildFn, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Auth } from './auth';
 
@@ -15,5 +15,3 @@ function checkAuth(): boolean {
 }
 
 export const authGuard: CanActivateFn = () => checkAuth();
-
-export const authChildGuard: CanActivateChildFn = () => checkAuth();
