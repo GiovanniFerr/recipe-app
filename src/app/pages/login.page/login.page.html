@@ -17,6 +17,8 @@
       Login
     </button>
 
-    <mat-spinner *ngIf="isLoading" diameter="30"></mat-spinner>
-  </mat-card>
+    @if (isLoading) {
+  <mat-spinner diameter="30"></mat-spinner>
+}
+</mat-card>
 </form>

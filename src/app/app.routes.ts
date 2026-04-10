@@ -8,8 +8,9 @@ import { RecipeEditPage } from './pages/recipe-edit.page/recipe-edit.page';
 import { LoginPage } from './pages/login.page/login.page';
 
 export const routes: Routes = [
-    { path: '', component: Navbar, canActivate: [authGuard], canActivateChild: [authChildGuard],
+    { path: '', canActivate: [authGuard], canActivateChild: [authChildGuard],
         children: [
+            { path: '', redirectTo: 'recipes', pathMatch: 'full' },
             {path: 'recipes', component: RecipesPage},
             {path: 'recipes/create', component: RecipeCreatePage},
             {path: 'recipes/:id', component: RecipeDetailPage},
@@ -17,5 +18,6 @@ export const routes: Routes = [
         ]
      },
      
-    { path: 'login', component: LoginPage}
+    { path: 'login', component: LoginPage},
+    { path: '**', redirectTo: '' }
 ];

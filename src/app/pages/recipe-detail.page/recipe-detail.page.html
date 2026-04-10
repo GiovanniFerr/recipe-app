@@ -1,1 +1,19 @@
-<p>recipe-detail.page works!</p>
+<div class="recipe-detail">
+  <h2>{{ recipe.title }}</h2>
+  <p>{{ recipe.description }}</p>
+
+  <h3>Ingredients</h3>
+  <ul class="recipe-ingredients">
+    @for (ingredient of recipe.ingredients; track ingredient.id) {
+      <li>{{ ingredient.name }} - {{ ingredient.quantity }}</li>
+    }
+  </ul>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="onEdit()">Edit</button>
+    <button mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+    <button mat-icon-button color="accent" (click)="toggleFavorite()">
+      <mat-icon>{{ recipe.favorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+    </button>
+  </div>
+</div>

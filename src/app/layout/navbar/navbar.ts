@@ -1,9 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Auth } from '../../auth/auth';
+import { MaterialModule } from '../../modules/material.module';
+import { MatSidenav } from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [MaterialModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {}
+export class Navbar {
+
+  @Input() sidenav!: MatSidenav;
+
+   constructor(private authService: Auth, private router: Router) {}
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+}

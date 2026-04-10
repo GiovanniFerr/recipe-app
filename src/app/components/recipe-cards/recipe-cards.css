@@ -1,0 +1,28 @@
+.recipe-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .recipe-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .recipe-title {
+    font-size: 1.1rem;
+  }
+
+  .recipe-ingredients {
+    margin: 10px 0;
+  }
+
+  button {
+    align-self: flex-end;
+  }
+}

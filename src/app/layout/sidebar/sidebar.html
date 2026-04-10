@@ -1,1 +1,20 @@
-<p>sidebar works!</p>
+<div class="sidebar" [class.closed]="isClosed">
+  <div class="logo-details">
+    <i class='bx bxl-angular icon'></i>
+    <span class="logo_name">Menù</span>
+    <i class='bx bx-menu' id="btn" (click)="toggleSidebar()">
+       <mat-icon>menu</mat-icon>
+    </i>
+  </div>
+
+<mat-nav-list>
+  <mat-list-item routerLink="recipes" routerLinkActive="active">
+    <mat-icon mat-list-icon>restaurant_menu</mat-icon>
+    <span mat-line>Recipes</span>
+  </mat-list-item>
+
+  <mat-list-item routerLink="recipes/create" routerLinkActive="active">
+    <mat-icon mat-list-icon>add</mat-icon>
+    <span mat-line>Create Recipe</span>
+  </mat-list-item>
+</mat-nav-list>

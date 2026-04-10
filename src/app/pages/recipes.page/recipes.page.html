@@ -1,1 +1,18 @@
-<p>recipes.page works!</p>
+<div class="recipes-container">
+
+  <button mat-raised-button color="primary" (click)="onAdd()">
+    Add Recipe
+  </button>
+
+  <div class="recipe-list">
+    @for (recipe of recipes; track recipe.id) {
+      <app-recipe-cards
+        [recipe]="recipe"
+        (edit)="onEdit(recipe)"
+        (delete)="onDelete(recipe)"
+        (toggleFavorite)="onToggleFavorite(recipe)">
+      </app-recipe-cards>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,65 @@
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background: #eba9a4;
+  transition: all 0.3s ease;
+}
+
+.sidebar.closed {
+  width: 78px;
+}
+
+.logo-details {
+  position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* ICONA ANGULAR */
+.logo-details .icon {
+  font-size: 28px;
+  color: #fff;
+}
+
+/* TESTO MENU */
+.logo-details .logo_name {
+  color: #353535;
+  font-size: 20px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* NASCONDI TESTO QUANDO CHIUSA */
+.sidebar.closed .logo_name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #353535;
+  cursor: pointer;
+}
+
+/* HOVER */
+#btn:hover {
+  color: #00bcd4;
+}
+
+mat-list-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  mat-icon {
+    margin-right: 10px;
+  }
+}
