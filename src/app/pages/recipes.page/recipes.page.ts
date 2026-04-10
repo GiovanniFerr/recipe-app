@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeCards } from '../../components/recipe-cards/recipe-cards';
+import { ApiFoodService } from '../../services/api-food.service';
 
 @Component({
   selector: 'app-recipes.page',
@@ -10,15 +11,23 @@ import { RecipeCards } from '../../components/recipe-cards/recipe-cards';
   templateUrl: './recipes.page.html',
   styleUrl: './recipes.page.css',
 })
-export class RecipesPage {
+export class RecipesPage implements OnInit{
    recipes: Recipe[] = [];
+   apiRec: any[] = [];
 
-  constructor(private recipeService: RecipeService, private router: Router) {
+  constructor(private recipeService: RecipeService, private router: Router, private apiFoodService: ApiFoodService) {}
+
+  ngOnInit() {
+    this.loadApiData();
     this.loadRecipes();
   }
 
   loadRecipes() {
     this.recipes = this.recipeService.getAll();
+  }
+
+  loadApiData() {
+    this.apiFoodService.getRecipes().subscribe((data: any) => {this.apiRec = (data.meals || []).slice(0, 5);})
   }
 
   onAdd() {

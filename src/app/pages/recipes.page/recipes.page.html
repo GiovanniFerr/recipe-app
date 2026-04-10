@@ -15,4 +15,32 @@
     }
   </div>
 
+  <div class="api-banner">
+
+  <h2>🍽️ No ideas?</h2>
+
+  <p>Discover community recipes and get inspired for your next meal.</p>
+
+</div>
+
+<div class="recipe-list">
+
+    @for (meal of apiRec; track meal.idMeal) {
+
+      <div class="card">
+        <img [src]="meal.strMealThumb">
+        <h3>{{ meal.strMeal }}</h3>
+        <p>{{ meal.strCategory }}</p>
+        <h2>Ingredients</h2>
+        <p>{{meal.strIngredient1}} - {{meal.strMeasure1}}</p>
+        <p>{{meal.strIngredient2}} - {{meal.strMeasure2}}</p>
+        <p>{{meal.strIngredient3}} - {{meal.strMeasure3}}</p>
+        <p>{{meal.strIngredient4}} - {{meal.strMeasure4}}</p>
+        <p>{{meal.strIngredient5}} - {{meal.strMeasure5}}</p>
+      </div>
+
+    }
+
+  </div>
+
 </div>
