@@ -1,0 +1,37 @@
+<div class="card">
+  @if (meal) {
+
+    <div class="layout">
+
+      <div class="left">
+        <img [src]="meal.strMealThumb">
+
+        <h3>{{ meal.strMeal | capitalizePipe }}</h3>
+
+        <p class="meta">{{ meal.strCategory }}</p>
+        <p class="meta">{{ meal.strArea }}</p>
+
+        <button mat-stroked-button color="primary" (click)="onBack()">
+          Back
+        </button> 
+      </div>
+
+      <div class="right">
+
+        <h2>Instructions</h2>
+        <p class="instructions">{{ meal.strInstructions }}</p>
+
+        <h2>Ingredients</h2>
+
+        @for (item of getIngredients(meal); track item.name) {
+          <p class="ingredient">
+            {{ item.name | capitalizePipe }} - {{ item.measure }}
+          </p>
+        }
+
+      </div>
+
+    </div>
+
+  }
+</div> 

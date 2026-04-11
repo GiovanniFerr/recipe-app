@@ -5,6 +5,7 @@ import { RecipeCreatePage } from './pages/recipe-create.page/recipe-create.page'
 import { RecipeDetailPage } from './pages/recipe-detail.page/recipe-detail.page';
 import { RecipeEditPage } from './pages/recipe-edit.page/recipe-edit.page';
 import { LoginPage } from './pages/login.page/login.page';
+import { ApiRecipeDetailPage } from './pages/api-recipe-detail.page/api-recipe-detail.page';
 
 export const routes: Routes = [
     { path: '', canActivate: [authGuard],
@@ -13,10 +14,11 @@ export const routes: Routes = [
             {path: 'recipes', component: RecipesPage},
             {path: 'recipes/create', component: RecipeCreatePage},
             {path: 'recipes/:id', component: RecipeDetailPage},
-            {path: 'recipes/edit/:id', component: RecipeEditPage}
+            {path: 'recipes/edit/:id', component: RecipeEditPage},
+            {path: 'apirecipes/:id', component: ApiRecipeDetailPage}
         ]
      },
      
     { path: 'login', component: LoginPage},
     { path: '**', redirectTo: '' }
-];
+]; 

@@ -10,4 +10,8 @@ export class ApiFoodService {
   getRecipes() {
     return this.http.get('https://www.themealdb.com/api/json/v1/1/search.php?s=');
   }
+
+  getRecipesById(id: string) {
+  return this.http.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  }
 }

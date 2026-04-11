@@ -1,14 +1,15 @@
 <div class="recipes-container">
 
-  <button mat-raised-button color="primary" (click)="onAdd()">
-    Add Recipe
-  </button>
+  <button mat-stroked-button color="primary" (click)="onAdd()">
+  Add Recipe
+</button>
 
   <div class="recipe-list">
     @for (recipe of recipes; track recipe.id) {
       <app-recipe-cards
         [recipe]="recipe"
         (edit)="onEdit(recipe)"
+        (detail)="onDetail(recipe)"
         (delete)="onDelete(recipe)"
         (toggleFavorite)="onToggleFavorite(recipe)">
       </app-recipe-cards>
@@ -29,14 +30,17 @@
 
       <div class="card">
         <img [src]="meal.strMealThumb">
-        <h3>{{ meal.strMeal | capitalizePipe}}</h3>
+        <h3>{{ meal.strMeal | capitalizePipe }}</h3>
         <p>{{ meal.strCategory }}</p>
         <h2>Ingredients</h2>
-        <p>{{meal.strIngredient1 | capitalizePipe}} - {{meal.strMeasure1}}</p>
-        <p>{{meal.strIngredient2 | capitalizePipe}} - {{meal.strMeasure2}}</p>
-        <p>{{meal.strIngredient3 | capitalizePipe}} - {{meal.strMeasure3}}</p>
-        <p>{{meal.strIngredient4 | capitalizePipe}} - {{meal.strMeasure4}}</p>
-        <p>{{meal.strIngredient5 | capitalizePipe}} - {{meal.strMeasure5}}</p>
+        <p>{{meal.strIngredient1 | capitalizePipe }} - {{meal.strMeasure1}}</p>
+        <p>{{meal.strIngredient2 | capitalizePipe }} - {{meal.strMeasure2}}</p>
+        <p>{{meal.strIngredient3 | capitalizePipe }} - {{meal.strMeasure3}}</p>
+        <p>{{meal.strIngredient4 | capitalizePipe }} - {{meal.strMeasure4}}</p>
+        <p>{{meal.strIngredient5 | capitalizePipe }} - {{meal.strMeasure5}}</p>
+        <button mat-button color="primary" (click)="onApiDetail(meal)">
+          Details
+        </button>
       </div>
 
     }
