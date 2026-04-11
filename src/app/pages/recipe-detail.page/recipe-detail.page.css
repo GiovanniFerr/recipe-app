@@ -30,4 +30,8 @@
     gap: 10px;
     align-items: center;
   }
+
+  .favorite {
+  color: #ff1744;
+}
 }

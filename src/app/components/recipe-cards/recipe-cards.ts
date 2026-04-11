@@ -14,11 +14,16 @@ export class RecipeCards {
   @Input() recipe!: Recipe;
 
   @Output() edit = new EventEmitter<Recipe>();
+  @Output() detail = new EventEmitter<Recipe>();
   @Output() delete = new EventEmitter<Recipe>();
   @Output() toggleFavorite = new EventEmitter<Recipe>();
 
   onEdit() {
     this.edit.emit(this.recipe);
+  }
+
+  onDetail() {
+    this.detail.emit(this.recipe);
   }
 
   onDelete() {

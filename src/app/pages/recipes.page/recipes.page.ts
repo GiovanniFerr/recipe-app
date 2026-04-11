@@ -7,10 +7,11 @@ import { ApiFoodService } from '../../services/api-food.service';
 import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CapitalizePipe } from '../../pipes/capitalize-pipe';
+import { MaterialModule } from '../../modules/material.module';
 
 @Component({
   selector: 'app-recipes.page',
-  imports: [RecipeCards, MatDialogModule, CapitalizePipe],
+  imports: [RecipeCards, MatDialogModule, CapitalizePipe, MaterialModule],
   templateUrl: './recipes.page.html',
   styleUrl: './recipes.page.css',
 })
@@ -46,6 +47,10 @@ export class RecipesPage implements OnInit{
     this.router.navigate(['/recipes/edit', recipe.id]);
   }
 
+  onDetail(recipe: Recipe) {
+    this.router.navigate(['recipes', recipe.id]);
+  }
+
   onDelete(recipe: Recipe) {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       data: { name: recipe.title }
@@ -59,10 +64,13 @@ export class RecipesPage implements OnInit{
   })
   }
 
-
   onToggleFavorite(recipe: Recipe) {
     this.recipeService.toggleFavorite(recipe.id);
     this.loadRecipes();
+  }
+
+  onApiDetail(recipe: any) {
+    this.router.navigate(['/apirecipes', recipe.idMeal])
   }
 }
 

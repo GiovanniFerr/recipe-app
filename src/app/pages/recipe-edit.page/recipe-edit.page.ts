@@ -43,6 +43,10 @@ export class RecipeEditPage implements OnInit {
     this.ingredients = this.ingredients.filter(i => i.id !== id);
   }
 
+  goToDetail() {
+  this.router.navigate(['/recipes', this.recipe.id]);
+}
+
   save(form: NgForm) {
     if (form.valid && this.recipe) {
       this.recipe.title = this.title;
