@@ -4,7 +4,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
+      <input matInput formControlName="email" [appAutofocus]="true"/>
 
       @if (form.get('email')?.invalid && form.get('email')?.touched) {
         <mat-error>

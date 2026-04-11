@@ -25,4 +25,12 @@
   button {
     align-self: flex-end;
   }
+
+  .no-wrap {
+  white-space: nowrap;
+}
+
+.favorite {
+  color: #ff1744;
+}
 }

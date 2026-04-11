@@ -21,7 +21,7 @@
 
   <p>Discover community recipes and get inspired for your next meal.</p>
 
-</div>
+</div> 
 
 <div class="recipe-list">
 
@@ -29,14 +29,14 @@
 
       <div class="card">
         <img [src]="meal.strMealThumb">
-        <h3>{{ meal.strMeal }}</h3>
+        <h3>{{ meal.strMeal | capitalizePipe}}</h3>
         <p>{{ meal.strCategory }}</p>
         <h2>Ingredients</h2>
-        <p>{{meal.strIngredient1}} - {{meal.strMeasure1}}</p>
-        <p>{{meal.strIngredient2}} - {{meal.strMeasure2}}</p>
-        <p>{{meal.strIngredient3}} - {{meal.strMeasure3}}</p>
-        <p>{{meal.strIngredient4}} - {{meal.strMeasure4}}</p>
-        <p>{{meal.strIngredient5}} - {{meal.strMeasure5}}</p>
+        <p>{{meal.strIngredient1 | capitalizePipe}} - {{meal.strMeasure1}}</p>
+        <p>{{meal.strIngredient2 | capitalizePipe}} - {{meal.strMeasure2}}</p>
+        <p>{{meal.strIngredient3 | capitalizePipe}} - {{meal.strMeasure3}}</p>
+        <p>{{meal.strIngredient4 | capitalizePipe}} - {{meal.strMeasure4}}</p>
+        <p>{{meal.strIngredient5 | capitalizePipe}} - {{meal.strMeasure5}}</p>
       </div>
 
     }

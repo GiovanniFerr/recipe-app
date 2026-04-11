@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Recipe } from '../../models/recipe.model';
 import { MaterialModule } from '../../modules/material.module';
-import { DatePipe } from '@angular/common';
+import { TimeFormatPipe } from '../../pipes/time-format-pipe';
+import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 
 @Component({
   selector: 'app-recipe-cards',
-  imports: [MaterialModule, DatePipe],
+  imports: [MaterialModule, TimeFormatPipe, CapitalizePipe],
   templateUrl: './recipe-cards.html',
   styleUrl: './recipe-cards.css',
 })

@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../auth/auth';
 import { MaterialModule } from '../../modules/material.module';
+import { AutofocusDirective } from '../../directives/autofocus.directive';
 
 @Component({
   selector: 'app-login.page',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, AutofocusDirective],
   templateUrl: './login.page.html',
   styleUrl: './login.page.css',
 })
