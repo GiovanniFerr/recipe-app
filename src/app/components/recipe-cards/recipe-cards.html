@@ -1,23 +1,24 @@
 <mat-card class="recipe-card">
   <mat-card-header>
-    <mat-card-title>{{ recipe.title }}</mat-card-title>
-    <mat-card-subtitle>{{ recipe.createdAt | date:'short' }}</mat-card-subtitle>
+    <mat-card-title>{{ recipe.title | capitalizePipe}}</mat-card-title>
+    <mat-card-subtitle>
+      <span class="no-wrap">{{ recipe.createdAt | timeFormatPipe }}</span>
+    </mat-card-subtitle>
 
-    <button mat-icon-button (click)="onToggleFavorite()">
-      @if (recipe.favorite) {
-        <mat-icon color="warn">favorite</mat-icon>
-      } @else {
-        <mat-icon>favorite_border</mat-icon>
-      }
-    </button>
+      <button mat-icon-button (click)="onToggleFavorite()">
+        <mat-icon [class.favorite]="recipe.favorite">
+          {{ recipe.favorite ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+      </button>
   </mat-card-header>
 
   <mat-card-content>
     <p>{{ recipe.description }}</p>
+    <mat-card-subtitle>Ingredients</mat-card-subtitle>
     <mat-list>
       @for (ingredient of recipe.ingredients; track ingredient.id) {
         <mat-list-item>
-          {{ ingredient.name }} - {{ ingredient.quantity }}
+          {{ ingredient.name | capitalizePipe}} - {{ ingredient.quantity }}
         </mat-list-item>
       }
     </mat-list>
