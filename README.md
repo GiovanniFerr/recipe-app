@@ -1,4 +1,4 @@
-# 🍽️ Recipe App
+# Recipe App
 
 Recipe App is an Angular training project built to practice and improve my skills in both Angular and Git workflows.
 
@@ -16,9 +16,8 @@ The goal of this project is to simulate a real-world application while experimen
   - Edit existing recipes
   - Delete recipes
 - ✨ "Get Inspired" section on the homepage:
-  - Displays 5 random recipes fetched from the **TheMealDB API**
+  - Displays 5 random recipes fetched from the **TheMealDB API** (https://www.themealdb.com/)
   - Includes a dedicated detail page for each external recipe
-- 📡 API used: https://www.themealdb.com/
 ---
 
 ## 🧠 Angular Concepts Used
@@ -49,15 +48,17 @@ The project is organized into clearly separated folders to maintain clean archit
 ## ▶️ How to Run the Project
 
 - To run this project locally:
-  - npm install
-  - ng serve
+  ```bash
+  npm install
+  ng serve
 - Then open:
   - http://localhost:4200
 - Requirements
   - Node.js (recommended LTS version)
   - Angular CLI
 - Install Angular CLI if needed:
-  - npm install -g @angular/cli
+  ```bash
+  npm install -g @angular/cli
 
 ---
 
