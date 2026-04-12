@@ -36,8 +36,13 @@ export class RecipesPage implements OnInit{
   }
 
   loadApiData() {
-    this.apiFoodService.getRecipes().subscribe((data: any) => {this.apiRec = (data.meals || []).slice(0, 5);})
-  }
+  this.apiFoodService.getRecipes().subscribe((data: any) => {
+    const meals = data.meals || [];
+    this.apiRec = meals
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5);
+  });
+}
 
   onAdd() {
     this.router.navigate(['/recipes/create']);
