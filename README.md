@@ -1,59 +1,80 @@
-# RecipeApp
+# 🍽️ Recipe App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+Recipe App is an Angular training project built to practice and improve my skills in both Angular and Git workflows.
 
-## Development server
+The goal of this project is to simulate a real-world application while experimenting with core Angular concepts, best practices in code organization and Git workflows.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🚀 Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- 🔐 Fake login system
+- 🍽️ Full CRUD for recipes:
+  - View all recipes
+  - View recipe details
+  - Create a new recipe
+  - Edit existing recipes
+  - Delete recipes
+- ✨ "Get Inspired" section on the homepage:
+  - Displays 5 random recipes fetched from the **TheMealDB API**
+  - Includes a dedicated detail page for each external recipe
+- 📡 API used: https://www.themealdb.com/
+---
 
-## Code scaffolding
+## 🧠 Angular Concepts Used
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Angular Material
+- Property Binding
+- Directives
+- Pipes
+- Services
+- Component lifecycle (ngOnInit)
+- Parent–Child component communication
+- Routing (including child routes and route parameters)
+- Auth service and route guards
+- Template-driven forms
+- Reactive forms
+- HttpClient module (API integration)
+- LocalStorage data persistence
+- Async Pipe with Observables
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🧱 Project Structure
 
-```bash
-ng generate --help
-```
+The project is organized into clearly separated folders to maintain clean architecture.
 
-## Building
+---
 
-To build the project run:
+## ▶️ How to Run the Project
 
-```bash
-ng build
-```
+- To run this project locally:
+  - npm install
+  - ng serve
+- Then open:
+  - http://localhost:4200
+- Requirements
+  - Node.js (recommended LTS version)
+  - Angular CLI
+- Install Angular CLI if needed:
+  - npm install -g @angular/cli
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🎯 Purpose
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+This project was created as a learning exercise to:
 
-```bash
-ng test
-```
+- Practice Angular development in a realistic scenario
+- Improve understanding of frontend architecture
+- Learn Git workflow with feature branches and structured commits
+- Simulate a production-like project structure
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 📌 Notes
 
-```bash
-ng e2e
-```
+This is a training project and does not include a real authentication system or backend.  
+All authentication and stored data are simulated using frontend logic and localStorage.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project was built using Angular official documentation and additional learning resources to support development and problem-solving.
