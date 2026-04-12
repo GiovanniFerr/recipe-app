@@ -1,38 +1,33 @@
-import { Injectable, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, inject } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
   private recipes: Recipe[] = [];
-  private platformId = inject(PLATFORM_ID);
+  private storage = inject(StorageService);
 
   constructor() {
     this.loadFromLocalStorage();
     if (this.recipes.length === 0) {
-      this.recipes = [];
       this.saveToLocalStorage();
     }
   }
 
   private loadFromLocalStorage() {
-    if (isPlatformBrowser(this.platformId)) {
-      const data = localStorage.getItem('recipes');
-      if (data) {
-        this.recipes = JSON.parse(data);
-        this.recipes.forEach(r => {
-          if (r.favorite === undefined) r.favorite = false;
-        });
-      }
+    const data = this.storage.get<Recipe[]>('recipes');
+    if (data) {
+      this.recipes = data;
+      this.recipes.forEach(r => {
+        if (r.favorite === undefined) r.favorite = false;
+      });
     }
   }
 
   private saveToLocalStorage() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('recipes', JSON.stringify(this.recipes));
-    }
+    this.storage.set('recipes', this.recipes);
   }
 
   getAll(): Recipe[] {
@@ -50,7 +45,7 @@ export class RecipeService {
     favorite: boolean;
   }): Recipe {
     const newRecipe: Recipe = {
-      id: this.nextRecipeId(),   // ID numerico
+      id: this.nextRecipeId(),
       createdAt: Date.now(),
       ...recipeData,
     };
@@ -78,10 +73,6 @@ export class RecipeService {
       recipe.favorite = !recipe.favorite;
       this.saveToLocalStorage();
     }
-  }
-
-  saveRecipes() {
-    this.saveToLocalStorage();
   }
 
   nextRecipeId(): number {
