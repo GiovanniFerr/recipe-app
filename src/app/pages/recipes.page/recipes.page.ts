@@ -8,16 +8,18 @@ import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 import { MaterialModule } from '../../modules/material.module';
+import { Observable, map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipes.page',
-  imports: [RecipeCards, MatDialogModule, CapitalizePipe, MaterialModule],
+  imports: [RecipeCards, MatDialogModule, CapitalizePipe, MaterialModule, AsyncPipe],
   templateUrl: './recipes.page.html',
   styleUrl: './recipes.page.css',
 })
 export class RecipesPage implements OnInit{
    recipes: Recipe[] = [];
-   apiRec: any[] = [];
+   apiRec$!: Observable<any[]>;
 
   constructor(
     private recipeService: RecipeService, 
@@ -27,8 +29,8 @@ export class RecipesPage implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.loadApiData();
     this.loadRecipes();
+    this.loadApiData();
   }
 
   loadRecipes() {
@@ -36,13 +38,11 @@ export class RecipesPage implements OnInit{
   }
 
   loadApiData() {
-  this.apiFoodService.getRecipes().subscribe((data: any) => {
-    const meals = data.meals || [];
-    this.apiRec = meals
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5);
-  });
-}
+    this.apiRec$ = this.apiFoodService.getRecipes().pipe(
+      map((data: any) => data.meals || []),
+      map((meals: any[]) => meals.sort(() => Math.random() - 0.5).slice(0, 5))
+    );
+  }
 
   onAdd() {
     this.router.navigate(['/recipes/create']);
