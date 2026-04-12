@@ -1,5 +1,5 @@
 <div class="card">
-  @if (meal) {
+  @if (meal$ | async; as meal) {
 
     <div class="layout">
 
@@ -23,7 +23,7 @@
 
         <h2>Ingredients</h2>
 
-        @for (item of getIngredients(meal); track item.name) {
+        @for (item of ingredients$| async; track item.name) {
           <p class="ingredient">
             {{ item.name | capitalizePipe }} - {{ item.measure }}
           </p>

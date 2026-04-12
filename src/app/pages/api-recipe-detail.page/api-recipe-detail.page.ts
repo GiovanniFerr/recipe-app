@@ -3,15 +3,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiFoodService } from '../../services/api-food.service';
 import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 import { MaterialModule } from '../../modules/material.module';
+import { Observable, map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-api-recipe-detail.page',
-  imports: [CapitalizePipe, MaterialModule],
+  imports: [CapitalizePipe, MaterialModule, AsyncPipe],
   templateUrl: './api-recipe-detail.page.html',
   styleUrl: './api-recipe-detail.page.css',
 })
 export class ApiRecipeDetailPage implements OnInit {
-  meal: any;
+  meal$!: Observable<any>;
+  ingredients$!: Observable<any[]>;
 
   constructor(
     private apiFoodService: ApiFoodService,
@@ -20,18 +23,21 @@ export class ApiRecipeDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id')!
+    const id = this.route.snapshot.paramMap.get('id')!;
     this.loadApiRecById(id);
+    this.loadIngredients();
   }
 
   loadApiRecById(id: string) {
-    this.apiFoodService.getRecipesById(id).subscribe((data: any) => {
-    this.meal = data.meals?.[0];
-  });
+    this.meal$ = this.apiFoodService.getRecipesById(id).pipe(
+      map((data: any) => data.meals?.[0])
+    );
   }
 
-  onBack() {
-    this.router.navigate(['/recipes'])
+  loadIngredients() {
+    this.ingredients$ = this.meal$.pipe(
+      map(meal => this.getIngredients(meal))
+    );
   }
 
   getIngredients(meal: any) {
@@ -48,8 +54,11 @@ export class ApiRecipeDetailPage implements OnInit {
       });
     }
   }
-
     return ingredients;
+  }
+
+  onBack() {
+    this.router.navigate(['/recipes'])
   }
 
 }

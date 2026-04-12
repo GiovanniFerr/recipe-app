@@ -26,7 +26,7 @@
 
 <div class="recipe-list">
 
-    @for (meal of apiRec; track meal.idMeal) {
+    @for (meal of apiRec$ | async; track meal.idMeal) {
 
       <div class="card">
         <img [src]="meal.strMealThumb">
