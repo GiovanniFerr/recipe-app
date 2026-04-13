@@ -1,83 +1,76 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
-import { StorageService } from './storage.service';
+import { Ingredient } from '../models/ingredient.model';
+import { FirebaseService } from './firebase.service';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  private recipes: Recipe[] = [];
-  private storage = inject(StorageService);
+  private dbUrl = 'https://angular-project-c6646-default-rtdb.europe-west1.firebasedatabase.app/recipes';
 
-  constructor() {
-    this.loadFromLocalStorage();
-    if (this.recipes.length === 0) {
-      this.saveToLocalStorage();
-    }
+  constructor(private firebase: FirebaseService) {}
+
+  getAll(): Observable<Recipe[]> {
+    return this.firebase.getRecipes<any>(`${this.dbUrl}.json`).pipe(
+      map(data => {
+        if (!data) return [];
+
+        return Object.keys(data).map(key => ({
+          id: key,
+          ...data[key],
+          favorite: data[key].favorite ?? false,
+        }));
+      })
+    );
   }
 
-  private loadFromLocalStorage() {
-    const data = this.storage.get<Recipe[]>('recipes');
-    if (data) {
-      this.recipes = data;
-      this.recipes.forEach(r => {
-        if (r.favorite === undefined) r.favorite = false;
-      });
-    }
-  }
-
-  private saveToLocalStorage() {
-    this.storage.set('recipes', this.recipes);
-  }
-
-  getAll(): Recipe[] {
-    return this.recipes;
-  }
-
-  getById(id: number): Recipe | undefined {
-    return this.recipes.find(r => r.id === id);
+  getById(id: string): Observable<Recipe | undefined> {
+    return this.getAll().pipe(
+      map((recipes: Recipe[]) =>
+        recipes.find(r => r.id === id)
+      )
+    );
   }
 
   create(recipeData: {
     title: string;
     description: string;
-    ingredients: { id: number; name: string; quantity: string }[];
+    ingredients: Ingredient[];
     favorite: boolean;
-  }): Recipe {
-    const newRecipe: Recipe = {
-      id: this.nextRecipeId(),
-      createdAt: Date.now(),
+  }): Observable<Recipe> {
+
+    const newRecipe = {
       ...recipeData,
+      createdAt: Date.now(),
     };
-    this.recipes.push(newRecipe);
-    this.saveToLocalStorage();
-    return newRecipe;
+
+    return this.firebase.createRecipe<any>(`${this.dbUrl}.json`, newRecipe).pipe(
+        map(response => ({
+          id: response.name,
+          ...newRecipe,
+        }))
+      );
   }
 
   update(recipe: Recipe) {
-    const index = this.recipes.findIndex(r => r.id === recipe.id);
-    if (index !== -1) {
-      this.recipes[index] = recipe;
-      this.saveToLocalStorage();
-    }
+    return this.firebase.updateRecipe(
+      `${this.dbUrl}/${recipe.id}.json`,
+      recipe
+    );
   }
 
-  delete(id: number) {
-    this.recipes = this.recipes.filter(r => r.id !== id);
-    this.saveToLocalStorage();
+  delete(id: string) {
+    return this.firebase.deleteRecipe(`${this.dbUrl}/${id}.json`);
   }
 
-  toggleFavorite(id: number) {
-    const recipe = this.recipes.find(r => r.id === id);
-    if (recipe) {
-      recipe.favorite = !recipe.favorite;
-      this.saveToLocalStorage();
-    }
-  }
+  toggleFavorite(recipe: Recipe) {
+    const updated = {
+      ...recipe,
+      favorite: !recipe.favorite,
+    };
 
-  nextRecipeId(): number {
-    return this.recipes.length > 0
-      ? Math.max(...this.recipes.map(r => r.id)) + 1
-      : 1;
+    return this.update(updated);
   }
 }

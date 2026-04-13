@@ -5,7 +5,7 @@
 </button>
 
   <div class="recipe-list">
-    @for (recipe of recipes; track recipe.id) {
+    @for (recipe of recipes$ | async; track recipe.id) {
       <app-recipe-cards
         [recipe]="recipe"
         (edit)="onEdit(recipe)"

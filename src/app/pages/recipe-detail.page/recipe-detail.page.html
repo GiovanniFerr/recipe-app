@@ -1,3 +1,4 @@
+@if (recipe$ | async; as recipe) {
 <div class="recipe-detail">
   <h2>{{ recipe.title | capitalizePipe}}</h2>
   <p>{{ recipe.description | capitalizePipe}}</p>
@@ -10,12 +11,13 @@
   </ul>
 
   <div class="actions">
-    <button mat-raised-button color="primary" (click)="onEdit()">Edit</button>
+    <button mat-raised-button color="primary" (click)="onEdit(recipe.id)">Edit</button>
     <button mat-raised-button color="warn" (click)="onBack()">Back</button>
-    <button mat-icon-button color="accent" (click)="toggleFavorite()">
+    <button mat-icon-button color="accent" (click)="toggleFavorite(recipe)">
       <mat-icon [class.favorite]="recipe.favorite">
           {{ recipe.favorite ? 'favorite' : 'favorite_border' }}
         </mat-icon>
     </button>
   </div>
 </div>
+}

@@ -1,37 +1,39 @@
+@if (recipe$ | async; as recipe) {
 <div class="recipe-form">
   <h2>Edit Recipe</h2>
-  <form #form="ngForm" (ngSubmit)="save(form)">
+  <form #form="ngForm" (ngSubmit)="save(recipe, form)">
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
-      <input matInput name="title" [(ngModel)]="title" required />
+      <input matInput name="title" [(ngModel)]="recipe.title" required />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
-      <textarea matInput name="description" [(ngModel)]="description" required></textarea>
+      <textarea matInput name="description" [(ngModel)]="recipe.description" required></textarea>
     </mat-form-field>
 
     <div class="ingredients-section">
       <h3>Ingredients</h3>
-      <button mat-mini-fab color="primary" type="button" (click)="addIngredient()">
+      <button mat-mini-fab color="primary" type="button" (click)="addIngredient(recipe)">
         <mat-icon>add</mat-icon>
       </button>
 
-      @for (ingredient of ingredients; track ingredient.id) {
+      @for (ingredient of recipe.ingredients; track ingredient.id) {
         <div class="ingredient-item">
           <input matInput placeholder="Name" [(ngModel)]="ingredient.name" name="name-{{ingredient.id}}" required />
           <input matInput placeholder="Quantity" [(ngModel)]="ingredient.quantity" name="qty-{{ingredient.id}}" required />
-          <button mat-icon-button color="warn" type="button" (click)="removeIngredient(ingredient.id)">
+          <button mat-icon-button color="warn" type="button" (click)="removeIngredient(recipe, ingredient.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
       }
     </div>
 
-    <button mat-raised-button color="accent" type="button" (click)="goToDetail()">
+    <button mat-raised-button color="accent" type="button" (click)="goToDetail(recipe.id)">
       Details
     </button>
 
     <button mat-raised-button color="primary" type="submit">Save Changes</button>
   </form>
 </div>
+}

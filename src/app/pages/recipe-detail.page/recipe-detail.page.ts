@@ -1,44 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { MaterialModule } from '../../modules/material.module';
 import { CapitalizePipe } from '../../pipes/capitalize-pipe';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-detail.page',
-  imports: [MaterialModule, CapitalizePipe],
+  imports: [MaterialModule, CapitalizePipe, AsyncPipe],
   templateUrl: './recipe-detail.page.html',
   styleUrl: './recipe-detail.page.css',
 })
-export class RecipeDetailPage  implements OnInit {
-  recipe!: Recipe;
+export class RecipeDetailPage {
+
+  recipe$!: Observable<Recipe | undefined>;
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const r = this.recipeService.getById(id);
-    if (r) {
-      this.recipe = r;
-    } else {
-      this.router.navigate(['/recipes']);
-    }
+  ) {
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.recipe$ = this.recipeService.getById(id);
   }
 
-  onEdit() {
-    this.router.navigate(['/recipes/edit', this.recipe.id]);
+
+  onEdit(id: string) {
+    this.router.navigate(['/recipes/edit', id]);
   }
 
   onBack() {
-    this.router.navigate(['/recipes'])
+    this.router.navigate(['/recipes']);
   }
 
-  toggleFavorite() {
-    this.recipeService.toggleFavorite(this.recipe.id);
+  toggleFavorite(recipe: any) {
+    this.recipeService.toggleFavorite(recipe).subscribe();
   }
 }

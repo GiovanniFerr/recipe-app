@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
@@ -17,30 +17,26 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './recipes.page.html',
   styleUrl: './recipes.page.css',
 })
-export class RecipesPage implements OnInit{
-   recipes: Recipe[] = [];
-   apiRec$!: Observable<any[]>;
+export class RecipesPage{
+  recipes$;
+  apiRec$!: Observable<any[]>;
 
   constructor(
     private recipeService: RecipeService, 
     private router: Router, 
     private apiFoodService: ApiFoodService,
     private dialog: MatDialog,
-  ) {}
-
-  ngOnInit() {
-    this.loadRecipes();
+  ) {
+    this.recipes$ = this.recipeService.getAll()
     this.loadApiData();
-  }
-
-  loadRecipes() {
-    this.recipes = this.recipeService.getAll();
   }
 
   loadApiData() {
     this.apiRec$ = this.apiFoodService.getRecipes().pipe(
       map((data: any) => data.meals || []),
-      map((meals: any[]) => meals.sort(() => Math.random() - 0.5).slice(0, 5))
+      map((meals: any[]) =>
+        meals.sort(() => Math.random() - 0.5).slice(0, 5)
+      )
     );
   }
 
@@ -63,15 +59,15 @@ export class RecipesPage implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      this.recipeService.delete(recipe.id);
-      this.loadRecipes();
-    }
-  })
+        this.recipeService.delete(recipe.id).subscribe(() => {
+          this.recipes$ = this.recipeService.getAll();
+        });
+      }
+    });
   }
 
   onToggleFavorite(recipe: Recipe) {
-    this.recipeService.toggleFavorite(recipe.id);
-    this.loadRecipes();
+    this.recipeService.toggleFavorite(recipe).subscribe();
   }
 
   onApiDetail(recipe: any) {

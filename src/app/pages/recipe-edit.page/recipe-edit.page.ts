@@ -1,59 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../../models/recipe.model';
-import { Ingredient } from '../../models/ingredient.model';
 import { RecipeService } from '../../services/recipe.service';
 import { MaterialModule } from '../../modules/material.module';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-edit.page',
-  imports: [FormsModule, MaterialModule],
+  imports: [FormsModule, MaterialModule, AsyncPipe],
   templateUrl: './recipe-edit.page.html',
   styleUrl: './recipe-edit.page.css',
 })
-export class RecipeEditPage implements OnInit {
-  recipe!: Recipe;
-  title = '';
-  description = '';
-  ingredients: Ingredient[] = [];
+export class RecipeEditPage {
+
+  recipe$!: Observable<Recipe | undefined>;
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router
-  ) {}
+  ) {
+    const id = String(this.route.snapshot.paramMap.get('id'));
 
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const r = this.recipeService.getById(id);
-    if (r) {
-      this.recipe = r;
-      this.title = r.title;
-      this.description = r.description;
-      this.ingredients = r.ingredients.map(i => ({ ...i }));
-    }
+    this.recipe$ = this.recipeService.getById(id);
   }
 
-  addIngredient() {
-    const nextId = this.ingredients.length > 0 ? Math.max(...this.ingredients.map(i => i.id)) + 1 : 1;
-    this.ingredients.push({ id: nextId, name: '', quantity: '' });
+  addIngredient(recipe: Recipe) {
+    const nextId =
+      recipe.ingredients.length > 0
+        ? Math.max(...recipe.ingredients.map(i => i.id)) + 1
+        : 1;
+
+    recipe.ingredients.push({
+      id: nextId,
+      name: '',
+      quantity: ''
+    });
   }
 
-  removeIngredient(id: number) {
-    this.ingredients = this.ingredients.filter(i => i.id !== id);
+  removeIngredient(recipe: Recipe, id: number) {
+    recipe.ingredients = recipe.ingredients.filter(i => i.id !== id);
   }
 
-  goToDetail() {
-  this.router.navigate(['/recipes', this.recipe.id]);
-}
+  goToDetail(id: string) {
+    this.router.navigate(['/recipes', id]);
+  }
 
-  save(form: NgForm) {
-    if (form.valid && this.recipe) {
-      this.recipe.title = this.title;
-      this.recipe.description = this.description;
-      this.recipe.ingredients = this.ingredients;
-      this.recipeService.update(this.recipe);
+  save(recipe: Recipe, form: NgForm) {
+    if (form.valid) {
+      this.recipeService.update(recipe).subscribe();
       this.router.navigate(['/recipes']);
     }
   }

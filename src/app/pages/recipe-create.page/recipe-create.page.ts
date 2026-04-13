@@ -54,13 +54,13 @@ export class RecipeCreatePage {
   save() {
     if (!this.canSave()) return;
 
-    this.recipeService.create({
-      title: this.form.value.title,
-      description: this.form.value.description,
-      ingredients: this.ingredients,
-      favorite: false
-    });
-
-    this.router.navigate(['/recipes']);
+      this.recipeService.create({
+        title: this.form.value.title,
+        description: this.form.value.description,
+        ingredients: this.ingredients,
+        favorite: false
+      }).subscribe(() => {
+        this.router.navigate(['/recipes']);
+      });
   }
 }

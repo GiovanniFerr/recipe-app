@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Auth } from '../../auth/auth';
 import { MaterialModule } from '../../modules/material.module';
 import { AutofocusDirective } from '../../directives/autofocus.directive';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-login.page',
@@ -18,7 +19,8 @@ export class LoginPage {
 
   constructor(
     private authService: Auth,
-    private router: Router
+    private router: Router,
+    private firebase: FirebaseService
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -39,5 +41,11 @@ export class LoginPage {
 
       this.router.navigate(['/recipes']);
     }, 800);
+
+    this.firebase.loginData(
+        'https://angular-project-c6646-default-rtdb.europe-west1.firebasedatabase.app/accounts.json',
+        {email, password}
+      ).subscribe()
   }
+
 }
