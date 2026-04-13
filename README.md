@@ -54,7 +54,7 @@ The project is organized into clearly separated folders to maintain clean archit
 - Then open:
   - http://localhost:4200
 - Requirements
-  - Node.js (recommended LTS version)
+  - Node.js
   - Angular CLI
 - Install Angular CLI if needed:
   ```bash
@@ -69,7 +69,6 @@ This project was created as a learning exercise to:
 - Practice Angular development in a realistic scenario
 - Improve understanding of frontend architecture
 - Learn Git workflow with feature branches and structured commits
-- Simulate a production-like project structure
 
 ---
 
