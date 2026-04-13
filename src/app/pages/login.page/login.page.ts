@@ -13,7 +13,6 @@ import { AutofocusDirective } from '../../directives/autofocus.directive';
 })
 export class LoginPage {
   isLoading = false;
-  error = '';
 
   form: FormGroup;
 

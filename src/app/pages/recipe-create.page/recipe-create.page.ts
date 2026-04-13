@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'; 
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router'; 
+import { Ingredient } from '../../models/ingredient.model';
 import { RecipeService } from '../../services/recipe.service'; 
 import { MaterialModule } from '../../modules/material.module';
 
@@ -13,7 +14,7 @@ import { MaterialModule } from '../../modules/material.module';
 export class RecipeCreatePage {
   form: FormGroup;
 
-  ingredients: { id: number; name: string; quantity: string }[] = [];
+  ingredients: Ingredient[] = [];
 
   constructor(private recipeService: RecipeService, private router: Router) {this.form = new FormGroup({
       title: new FormControl('', Validators.required),
