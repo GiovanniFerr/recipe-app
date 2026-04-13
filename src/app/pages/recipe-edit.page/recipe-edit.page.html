@@ -1,37 +1,91 @@
 <div class="recipe-form">
   <h2>Edit Recipe</h2>
-  <form #form="ngForm" (ngSubmit)="save(form)">
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
-      <input matInput name="title" [(ngModel)]="title" required />
+      <input matInput formControlName="title" />
+
+      @if (form.get('title')?.touched && form.get('title')?.invalid) {
+        <mat-error>Title required</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
-      <textarea matInput name="description" [(ngModel)]="description" required></textarea>
+      <textarea matInput formControlName="description"></textarea>
+
+      @if (form.get('description')?.touched && form.get('description')?.invalid) {
+        <mat-error>Description required</mat-error>
+      }
     </mat-form-field>
 
     <div class="ingredients-section">
-      <h3>Ingredients</h3>
-      <button mat-mini-fab color="primary" type="button" (click)="addIngredient()">
+      <h3>Ingredients (min 3)</h3>
+
+      <button
+        mat-mini-fab
+        color="primary"
+        type="button"
+        (click)="addIngredient()"
+      >
         <mat-icon>add</mat-icon>
       </button>
 
       @for (ingredient of ingredients; track ingredient.id) {
         <div class="ingredient-item">
-          <input matInput placeholder="Name" [(ngModel)]="ingredient.name" name="name-{{ingredient.id}}" required />
-          <input matInput placeholder="Quantity" [(ngModel)]="ingredient.quantity" name="qty-{{ingredient.id}}" required />
-          <button mat-icon-button color="warn" type="button" (click)="removeIngredient(ingredient.id)">
+
+          <input
+            matInput
+            placeholder="Name"
+            [value]="ingredient.name"
+            (input)="updateIngredient(ingredient.id, 'name', $event.target.value)"
+          />
+
+          <input
+            matInput
+            placeholder="Quantity"
+            [value]="ingredient.quantity"
+            (input)="updateIngredient(ingredient.id, 'quantity', $event.target.value)"
+          />
+
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="removeIngredient(ingredient.id)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
+
         </div>
+      }
+
+      @if (!isIngredientsValid()) {
+        <mat-error>
+          Please enter at least 3 complete ingredients
+        </mat-error>
       }
     </div>
 
-    <button mat-raised-button color="accent" type="button" (click)="goToDetail()">
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="goToDetail()"
+    >
       Details
     </button>
 
-    <button mat-raised-button color="primary" type="submit">Save Changes</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!canSave()"
+    >
+      Save Changes
+    </button>
+
   </form>
 </div>
