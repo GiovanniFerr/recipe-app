@@ -31,7 +31,6 @@ The goal of this project is to simulate a real-world application while experimen
 - Parent–Child component communication
 - Routing (including child routes and route parameters)
 - Auth service and route guards
-- Template-driven forms
 - Reactive forms
 - HttpClient module (API integration)
 - LocalStorage data persistence
