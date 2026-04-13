@@ -8,7 +8,7 @@
 
       @if (form.get('email')?.invalid && form.get('email')?.touched) {
         <mat-error>
-          Email non valida
+          Invalid email address
         </mat-error>
       }
     </mat-form-field>
@@ -19,7 +19,7 @@
 
       @if (form.get('password')?.invalid && form.get('password')?.touched) {
         <mat-error>
-          Minimo 6 caratteri
+          Minimum 6 characters
         </mat-error>
       }
     </mat-form-field>

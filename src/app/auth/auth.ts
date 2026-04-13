@@ -11,8 +11,8 @@ export class Auth {
     }
   }
 
-  login(username: string, password: string) {
-    if (username && password) {
+  login(email: string, password: string) {
+    if (email && password) {
       this.isLogged = true;
 
       if (isPlatformBrowser(this.platformId)) {

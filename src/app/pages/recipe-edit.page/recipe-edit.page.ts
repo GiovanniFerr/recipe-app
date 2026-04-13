@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../../models/recipe.model';
+import { Ingredient } from '../../models/ingredient.model';
 import { RecipeService } from '../../services/recipe.service';
 import { MaterialModule } from '../../modules/material.module';
 
@@ -15,7 +16,7 @@ export class RecipeEditPage implements OnInit {
   recipe!: Recipe;
   title = '';
   description = '';
-  ingredients: { id: number; name: string; quantity: string }[] = [];
+  ingredients: Ingredient[] = [];
 
   constructor(
     private route: ActivatedRoute,
