@@ -16,7 +16,8 @@ export class RecipeCreatePage {
 
   ingredients: Ingredient[] = [];
 
-  constructor(private recipeService: RecipeService, private router: Router) {this.form = new FormGroup({
+  constructor(private recipeService: RecipeService, private router: Router) {
+    this.form = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
     });

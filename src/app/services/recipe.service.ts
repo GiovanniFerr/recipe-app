@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
+import { Ingredient } from '../models/ingredient.model';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -41,7 +42,7 @@ export class RecipeService {
   create(recipeData: {
     title: string;
     description: string;
-    ingredients: { id: number; name: string; quantity: string }[];
+    ingredients: Ingredient[];
     favorite: boolean;
   }): Recipe {
     const newRecipe: Recipe = {
