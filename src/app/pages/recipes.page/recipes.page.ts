@@ -18,7 +18,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './recipes.page.css',
 })
 export class RecipesPage{
-  recipes$;
+  recipes$!: Observable<Recipe[]>;
   apiRec$!: Observable<any[]>;
 
   constructor(
@@ -27,9 +27,13 @@ export class RecipesPage{
     private apiFoodService: ApiFoodService,
     private dialog: MatDialog,
   ) {
-    this.recipes$ = this.recipeService.getAll()
+    this.loadRecipes();
     this.loadApiData();
   }
+
+  loadRecipes() {
+    this.recipes$ =this.recipeService.getAll()
+    }
 
   loadApiData() {
     this.apiRec$ = this.apiFoodService.getRecipes().pipe(
@@ -60,7 +64,7 @@ export class RecipesPage{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.recipeService.delete(recipe.id).subscribe(() => {
-          this.recipes$ = this.recipeService.getAll();
+          this.loadRecipes();
         });
       }
     });

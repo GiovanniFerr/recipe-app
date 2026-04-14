@@ -18,7 +18,7 @@ export class FirebaseService {
   }
 
   updateRecipe<T>(url: string, body: any): Observable<T> {
-    return this.http.put<T>(url, body);
+    return this.http.patch<T>(url, body);
   }
 
   deleteRecipe<T>(url: string): Observable<T> {

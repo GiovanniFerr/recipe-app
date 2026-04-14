@@ -50,8 +50,9 @@ export class RecipeEditPage {
 
   save(recipe: Recipe, form: NgForm) {
     if (form.valid) {
-      this.recipeService.update(recipe).subscribe();
-      this.router.navigate(['/recipes']);
+      this.recipeService.update(recipe).subscribe(() => {
+        this.router.navigate(['/recipes']);
+      });
     }
   }
 }
