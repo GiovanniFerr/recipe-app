@@ -1,17 +1,18 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../auth/auth';
 import { MaterialModule } from '../../modules/material.module';
 import { AutofocusDirective } from '../../directives/autofocus.directive';
 
 @Component({
-  selector: 'app-login.page',
+  selector: 'app-signup.page',
   imports: [MaterialModule, ReactiveFormsModule, AutofocusDirective, RouterLink],
-  templateUrl: './login.page.html',
-  styleUrl: './login.page.css',
+  templateUrl: './signup.page.html',
+  styleUrl: './signup.page.css',
 })
-export class LoginPage {
+export class SignupPage {
   isLoading = false;
 
   form: FormGroup;
@@ -19,7 +20,6 @@ export class LoginPage {
   constructor(
     private authService: Auth,
     private router: Router,
-    private cdr: ChangeDetectorRef
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -31,24 +31,16 @@ export class LoginPage {
     if (this.form.invalid) return;
 
     const { email, password } = this.form.value;
-
     this.isLoading = true;
-    this.cdr.detectChanges();
 
-    this.authService.login(email, password).subscribe({
-      next: (res: any) => {
-        console.log('Firebase:', res)
+    this.authService.register(email, password).subscribe({
+      next: () => {
         this.isLoading = false;
-        this.cdr.detectChanges();
-
         this.router.navigate(['/recipes']);
       },
-
       error: (err) => {
         this.isLoading = false;
-        this.cdr.detectChanges();
-
-        console.log('Login fallito', err);
+        console.log('Signup fallito', err);
       }
     });
   }

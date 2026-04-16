@@ -2,16 +2,14 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Auth } from './auth';
 
-function checkAuth(): boolean {
+export const authGuard: CanActivateFn = () => {
   const auth = inject(Auth);
   const router = inject(Router);
 
-  if (auth.checkAuth()) {
+  if (auth.getToken()) {
     return true;
   }
 
   router.navigate(['/login']);
   return false;
-}
-
-export const authGuard: CanActivateFn = () => checkAuth();
+};

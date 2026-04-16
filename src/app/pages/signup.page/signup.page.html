@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-card>
-    <h2>Login</h2>
+    <h2>Sign Up</h2>
 
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
@@ -30,15 +30,16 @@
       type="submit"
       [disabled]="form.invalid || isLoading"
     >
-      Login
+      Sign Up
     </button>
 
     <button
       mat-raised-button
       color="primary"
-      [routerLink]="['/signup']"
+      type="submit"
+      [routerLink]="['/login']"
     >
-      Create account
+      Already have an account?
     </button>
 
     @if (isLoading) {

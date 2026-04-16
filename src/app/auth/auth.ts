@@ -1,35 +1,50 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class Auth {
-  private isLogged = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isLogged = localStorage.getItem('auth') === 'true';
-    }
+  private apiKey = 'AIzaSyDbjoZk_9-5k3vlXvSCJGiLZrOLp3lcExc';
+  private token: string | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  register(email: string, password: string): Observable<any> {
+    return this.http
+      .post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`,
+        { email, password, returnSecureToken: true }
+      )
+      .pipe(
+        tap((res: any) => {
+          this.token = res.idToken;
+        })
+      );
   }
 
-  login(email: string, password: string) {
-    if (email && password) {
-      this.isLogged = true;
-
-      if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem('auth', 'true');
-      }
-    }
+  login(email: string, password: string): Observable<any> {
+    return this.http
+      .post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`,
+        { email, password, returnSecureToken: true }
+      )
+      .pipe(
+        tap((res: any) => {
+          this.token = res.idToken;
+        })
+      );
   }
 
   logout() {
-    this.isLogged = false;
-
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('auth');
-    }
+    this.token = null;
   }
 
-  checkAuth(): boolean {
-    return this.isLogged;
+  isLogged(): boolean {
+    return this.token !== null;
+  }
+
+  getToken() {
+    return this.token;
   }
 }

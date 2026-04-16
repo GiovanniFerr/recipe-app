@@ -6,6 +6,7 @@ import { RecipeDetailPage } from './pages/recipe-detail.page/recipe-detail.page'
 import { RecipeEditPage } from './pages/recipe-edit.page/recipe-edit.page';
 import { LoginPage } from './pages/login.page/login.page';
 import { ApiRecipeDetailPage } from './pages/api-recipe-detail.page/api-recipe-detail.page';
+import { SignupPage } from './pages/signup.page/signup.page';
 
 export const routes: Routes = [
     { path: '', canActivate: [authGuard],
@@ -20,5 +21,6 @@ export const routes: Routes = [
      },
      
     { path: 'login', component: LoginPage},
+    { path: 'signup', component: SignupPage},
     { path: '**', redirectTo: '' }
 ]; 
