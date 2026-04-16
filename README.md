@@ -35,6 +35,8 @@ The goal of this project is to simulate a real-world application while experimen
 - HttpClient module (API integration)
 - LocalStorage data persistence
 - Async Pipe with Observables
+- Firebase Realtime Database for storing data and performing CRUD operations (not a feature merged into master but a temporary test branch)
+- Firebase Authentication using REST API tokens to simulate registration/login (not a feature merged into master but a temporary test branch)
 
 ---
 
