@@ -8,7 +8,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class RecipeService {
-  private dbUrl = 'https://angular-project-c6646-default-rtdb.europe-west1.firebasedatabase.app/recipes';
+  private dbUrl = 'YourDBurl';
 
   constructor(private firebase: FirebaseService) {}
 
