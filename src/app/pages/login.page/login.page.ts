@@ -1,9 +1,11 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../auth/auth';
 import { MaterialModule } from '../../modules/material.module';
 import { AutofocusDirective } from '../../directives/autofocus.directive';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialog } from '../../components/alert-dialog/alert-dialog';
 
 @Component({
   selector: 'app-login.page',
@@ -16,6 +18,7 @@ export class LoginPage {
 
   form: FormGroup;
 
+  readonly dialog = inject(MatDialog)
   constructor(
     private authService: Auth,
     private router: Router,
@@ -44,11 +47,16 @@ export class LoginPage {
         this.router.navigate(['/recipes']);
       },
 
-      error: (err) => {
+      error: () => {
         this.isLoading = false;
         this.cdr.detectChanges();
 
-        console.log('Login fallito', err);
+        this.dialog.open(AlertDialog, {
+          data: {
+            title: 'Login failed',
+            message: 'Invalid email or password, or user not found'
+          }
+        })
       }
     });
   }

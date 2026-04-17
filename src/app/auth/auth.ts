@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { CONFIG } from '../config';
 
 @Injectable({ providedIn: 'root' })
 export class Auth {
 
-  private apiKey = 'AIzaSyDbjoZk_9-5k3vlXvSCJGiLZrOLp3lcExc';
+  private apiKey = CONFIG.apiKey;
   private token: string | null = null;
 
   constructor(private http: HttpClient) {}

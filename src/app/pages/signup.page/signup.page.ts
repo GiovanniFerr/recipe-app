@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../auth/auth';
 import { MaterialModule } from '../../modules/material.module';
 import { AutofocusDirective } from '../../directives/autofocus.directive';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialog } from '../../components/alert-dialog/alert-dialog';
 
 @Component({
   selector: 'app-signup.page',
@@ -17,9 +19,12 @@ export class SignupPage {
 
   form: FormGroup;
 
+  readonly dialog = inject(MatDialog);
+
   constructor(
     private authService: Auth,
     private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -38,9 +43,16 @@ export class SignupPage {
         this.isLoading = false;
         this.router.navigate(['/recipes']);
       },
-      error: (err) => {
+      error: () => {
         this.isLoading = false;
-        console.log('Signup fallito', err);
+        this.cdr.detectChanges();
+
+        this.dialog.open(AlertDialog, {
+          data: {
+            title: 'Signup failed',
+            message: 'This email is already registered or invalid'
+          }
+        })
       }
     });
   }

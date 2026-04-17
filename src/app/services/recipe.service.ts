@@ -3,12 +3,13 @@ import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
 import { FirebaseService } from './firebase.service';
 import { Observable, map } from 'rxjs';
+import { CONFIG } from '../config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  private dbUrl = 'https://angular-project-c6646-default-rtdb.europe-west1.firebasedatabase.app/recipes';
+  private dbUrl = CONFIG.dbUrl;
 
   constructor(private firebase: FirebaseService) {}
 
