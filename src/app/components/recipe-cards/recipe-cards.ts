@@ -12,6 +12,7 @@ import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 })
 export class RecipeCards { 
   @Input() recipe!: Recipe;
+  @Input() isLogged = false;
 
   @Output() edit = new EventEmitter<Recipe>();
   @Output() detail = new EventEmitter<Recipe>();

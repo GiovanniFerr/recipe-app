@@ -9,18 +9,23 @@ import { ApiRecipeDetailPage } from './pages/api-recipe-detail.page/api-recipe-d
 import { SignupPage } from './pages/signup.page/signup.page';
 
 export const routes: Routes = [
-    { path: '', canActivate: [authGuard],
-        children: [
-            {path: '', redirectTo: 'recipes', pathMatch: 'full'},
-            {path: 'recipes', component: RecipesPage},
-            {path: 'recipes/create', component: RecipeCreatePage},
-            {path: 'recipes/:id', component: RecipeDetailPage},
-            {path: 'recipes/edit/:id', component: RecipeEditPage},
-            {path: 'apirecipes/:id', component: ApiRecipeDetailPage}
-        ]
-     },
-     
-    { path: 'login', component: LoginPage},
-    { path: 'signup', component: SignupPage},
-    { path: '**', redirectTo: '' }
-]; 
+  { path: '', redirectTo: 'recipes', pathMatch: 'full' },
+
+  { path: 'recipes', component: RecipesPage },
+  { path: 'apirecipes/:id', component: ApiRecipeDetailPage },
+
+  {
+    path: 'recipes',
+    canActivateChild: [authGuard],
+    children: [
+      { path: 'create', component: RecipeCreatePage },
+      { path: 'edit/:id', component: RecipeEditPage },
+      { path: ':id', component: RecipeDetailPage },
+    ],
+  },
+
+  { path: 'login', component: LoginPage },
+  { path: 'signup', component: SignupPage },
+
+  { path: '**', redirectTo: 'recipes' }
+];

@@ -1,6 +1,7 @@
 .app-title {
   font-weight: bold;
   font-size: 1.2rem;
+  margin-right: 12px; /* aggiunto */
 }
 
 .spacer {
@@ -11,4 +12,7 @@ mat-toolbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+  display: flex; 
+  align-items: center;
+  gap: 10px; 
 }

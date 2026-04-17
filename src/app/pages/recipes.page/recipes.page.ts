@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { Auth } from '../../auth/auth';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeCards } from '../../components/recipe-cards/recipe-cards';
@@ -10,10 +11,11 @@ import { CapitalizePipe } from '../../pipes/capitalize-pipe';
 import { MaterialModule } from '../../modules/material.module';
 import { Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-recipes.page',
-  imports: [RecipeCards, MatDialogModule, CapitalizePipe, MaterialModule, AsyncPipe],
+  imports: [RecipeCards, MatDialogModule, CapitalizePipe, MaterialModule, AsyncPipe, RouterLink],
   templateUrl: './recipes.page.html',
   styleUrl: './recipes.page.css',
 })
@@ -21,12 +23,17 @@ export class RecipesPage{
   recipes$!: Observable<Recipe[]>;
   apiRec$!: Observable<any[]>;
 
+  isLogged = false;
+
   constructor(
-    private recipeService: RecipeService, 
+    private recipeService: RecipeService,
+    private authService: Auth,
     private router: Router, 
     private apiFoodService: ApiFoodService,
     private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
   ) {
+    this.isLogged = this.authService.isLogged();
     this.loadRecipes();
     this.loadApiData();
   }
@@ -71,7 +78,10 @@ export class RecipesPage{
   }
 
   onToggleFavorite(recipe: Recipe) {
-    this.recipeService.toggleFavorite(recipe).subscribe();
+    this.recipeService.toggleFavorite(recipe).subscribe(() => {
+      recipe.favorite = !recipe.favorite;
+      this.cdr.markForCheck();
+    });
   }
 
   onApiDetail(recipe: any) {
