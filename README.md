@@ -54,12 +54,36 @@ The project is organized into clearly separated folders to maintain clean archit
   ng serve
 - Then open:
   - http://localhost:4200
-- Requirements
-  - Node.js
-  - Angular CLI
+# Requirements
+Tested with:
+- Node.js 24.14.0
+- Angular CLI 21.2.7
+- Angular 21.2.8
+
+Recommended:
+- Node.js >= 20.x (LTS)
+- Angular CLI >= 21.2.x
+- Angular >= 21.2.x
 - Install Angular CLI if needed:
   ```bash
   npm install -g @angular/cli
+
+---
+  
+# Firebase setup
+- To run this project with Firebase, you must create a local configuration file.
+- Create the config file "config.local.ts" in src/app
+- Add your Firebase credentials
+  Copy the structure from config.ts and create your own config.local.ts:
+  ```ts
+  export const CONFIG = {
+  apiKey: 'YourAPIkey',
+  dbUrl: 'YourDBurl'
+  };
+# Important
+- config.local.ts is required to run the Firebase version of the app
+- Do NOT use the values in config.ts (they are placeholders)
+- Never commit config.local.ts to GitHub
 
 ---
 
