@@ -5,7 +5,7 @@ import { Observable, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class Auth {
 
-  private apiKey = 'AIzaSyDbjoZk_9-5k3vlXvSCJGiLZrOLp3lcExc';
+  private apiKey = 'YourAPIkey';
   private token: string | null = null;
 
   constructor(private http: HttpClient) {}
